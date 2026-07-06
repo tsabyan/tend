@@ -279,7 +279,6 @@ export default function HabitApp() {
       <div className="hb-root">
         <div className="hb-wrap">
           <button className="hb-back" onClick={() => setSelIdn(null)}><ArrowLeft size={15} /> All identities</button>
-          <span className="hb-eyebrow">I want to become</span>
           <input className="hb-name-input" style={{ marginTop: 8 }} value={idn.name} placeholder="e.g. A guitarist" onChange={(e) => patchIdentityName(idn.id, e.target.value)} />
           <div className="hb-divider" />
           <div style={{ marginBottom: 16 }}>
