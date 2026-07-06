@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tend
 
-## Getting Started
+Goals, habits and tasks — one calm place. A productivity suite with three modules behind a bottom nav:
 
-First, run the development server:
+- **Focus** — goals broken into ordered steps, an immersive one-step-at-a-time focus mode with a pomodoro timer (15/25/50m + 5m breaks), and per-goal focus time tracking. AI can draft steps from a goal title.
+- **Habits** — identity-based habit tracking ("I want to become …"), per-weekday schedules, streaks, 30-day completion rate, monthly calendar. AI can draft habits from an identity.
+- **Tasks** — fast capture, a sun toggle for "today", Today / Later / Done sections.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Built with Next.js (App Router, TypeScript), Supabase (auth + Postgres with RLS), and the Gemini API for AI suggestions. Ported from the prototype in [reference/productivity-suite.jsx](reference/productivity-suite.jsx) — see [docs/PLAN.md](docs/PLAN.md) for the implementation plan.
+
+## Setup
+
+1. **Supabase project** — create one at [supabase.com](https://supabase.com), or run locally with `supabase start` (requires Docker).
+2. **Environment** — copy `.env.example` to `.env.local` and fill in:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `GEMINI_API_KEY` (server-side only, used by the AI suggestion routes)
+3. **Database** — apply the migration in `supabase/migrations/`:
+   ```bash
+   supabase link --project-ref <your-project-ref>
+   supabase db push
+   ```
+   Or paste the SQL into the dashboard's SQL Editor.
+
+   All tables live in the dedicated `tend` schema (not `public`). On a hosted project, also add `tend` to **Project Settings → API → Exposed schemas** — without this every query returns 404/406. (Local `supabase start` picks it up from `config.toml` automatically.)
+4. **Run**:
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+Sign up with email + password on `/login`. If email confirmation is enabled in your Supabase auth settings, confirm before signing in.
+
+## Structure
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+src/app/              routes: / (shell), /login, /auth/signout, /api/ai/*
+src/components/       Shell + FocusApp / HabitApp / TodoApp modules
+src/lib/              supabase clients, types, dates/streak utils, chime, AI helpers
+src/proxy.ts          session refresh + auth guard
+supabase/migrations/  schema: goals, steps, identities, habits, habit_logs, todos (all RLS)
+```
