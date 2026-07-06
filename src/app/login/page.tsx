@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { Sprout } from "lucide-react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function LoginPage() {
   return (
     <div className="auth-root">
       <form className="auth-card" onSubmit={submit}>
-        <div className="auth-mark"><Sprout size={26} /></div>
+        <div className="auth-mark"><Image src="/logo.svg" alt="Tend" width={40} height={40} /></div>
         <span className="auth-eyebrow">Tend</span>
         <h1 className="auth-h1">{mode === "signin" ? "Welcome back" : "Create your space"}</h1>
         <p className="auth-sub">Goals, habits and tasks — one calm place.</p>

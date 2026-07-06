@@ -9,6 +9,11 @@ const splineMono = Spline_Sans_Mono({ subsets: ["latin"], variable: "--f-spline-
 export const metadata: Metadata = {
   title: "Tend",
   description: "Goals, habits and tasks — one calm place.",
+  appleWebApp: {
+    capable: true,
+    title: "Tend",
+    statusBarStyle: "default",
+  },
 };
 
 export const viewport: Viewport = {
