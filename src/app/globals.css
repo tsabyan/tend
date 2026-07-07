@@ -23,7 +23,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .suite-tab{flex:1; background:none; border:none; color:#b3b6af; font-family:var(--font-sans); font-size:11px; font-weight:600; letter-spacing:.01em; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; transition:color .15s; padding-top:2px;}
 .suite-tab span{line-height:1;}
 .suite-tab.on{color:var(--amber);}
-.suite-tab:not(.on):hover{color:var(--ink);}
+.suite-tab:hover{color:var(--amber);}
 .suite-head{display:flex; align-items:center; gap:11px; margin-bottom:6px;}
 .suite-head .naf-h1,.suite-head .hb-h1,.suite-head .td-h1{margin:2px 0 0;}
 .suite-empty{text-align:center; padding:32px 6px 10px;}
