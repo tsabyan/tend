@@ -30,6 +30,22 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .suite-empty .naf-empty,.suite-empty .hb-empty,.suite-empty .td-empty{margin-top:14px; padding:0;}
 @media (prefers-reduced-motion: reduce){.suite-tab{transition:none;}}
 
+/* ===== confirm modal (cf) ===== */
+.cf-overlay{position:fixed; inset:0; z-index:100; background:rgba(31,35,32,0.32); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; padding:24px; animation:cffade .12s ease;}
+.cf-card{width:100%; max-width:340px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px 22px 18px; box-shadow:0 18px 50px rgba(31,35,32,0.18); animation:cfpop .14s ease;}
+.cf-title{font-family:var(--font-serif); font-weight:500; font-size:20px; letter-spacing:-.01em; color:var(--ink); margin-bottom:8px;}
+.cf-message{font-size:14px; line-height:1.5; color:var(--ink2); margin:0 0 20px;}
+.cf-actions{display:flex; gap:10px;}
+.cf-btn{flex:1; font-family:inherit; font-size:14px; font-weight:600; border-radius:12px; padding:12px; cursor:pointer; border:1px solid var(--line); background:var(--card); color:var(--ink); transition:all .15s;}
+.cf-btn:hover{border-color:#dad8cf;}
+.cf-btn.primary{background:var(--amber); color:#fff; border-color:var(--amber);}
+.cf-btn.primary:hover{background:var(--amber-d); border-color:var(--amber-d);}
+.cf-btn.danger{background:#c0573a; color:#fff; border-color:#c0573a;}
+.cf-btn.danger:hover{background:#a8492f; border-color:#a8492f;}
+@keyframes cffade{from{opacity:0;}to{opacity:1;}}
+@keyframes cfpop{from{opacity:0; transform:scale(.96) translateY(6px);}to{opacity:1; transform:none;}}
+@media (prefers-reduced-motion: reduce){.cf-overlay,.cf-card{animation:none;}}
+
 /* ===== profile (pf) ===== */
 .pf-root{min-height:100vh; background:transparent; color:var(--ink); font-family:var(--font-sans);}
 .pf-wrap{max-width:520px; margin:0 auto; padding:34px 24px 100px;}

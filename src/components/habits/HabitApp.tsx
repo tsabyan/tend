@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Check, ArrowLeft, Sparkles, Trash2, Flame } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { useConfirm } from "@/components/ui/ConfirmProvider";
 import { chimeHabit } from "@/lib/chime";
 import { useDebounced } from "@/lib/useDebounced";
 import {
@@ -16,6 +17,7 @@ type Logs = Record<string, Set<string>>; // habit_id -> set of ISO days
 export default function HabitApp() {
   // createBrowserClient is a module-level singleton, so this is stable across renders
   const supabase = createClient();
+  const confirm = useConfirm();
   const [loaded, setLoaded] = useState(false);
   const [identities, setIdentities] = useState<Identity[]>([]);
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -71,8 +73,8 @@ export default function HabitApp() {
     persistIdentityName(id, name);
   };
 
-  const deleteIdentity = (id: string) => {
-    if (!confirm("Delete this identity and all its habits?")) return;
+  const deleteIdentity = async (id: string) => {
+    if (!(await confirm({ title: "Delete identity", message: "Delete this identity and all its habits? This can’t be undone." }))) return;
     const habitIds = habits.filter((h) => h.identity_id === id).map((h) => h.id);
     setIdentities((xs) => xs.filter((x) => x.id !== id));
     setHabits((hs) => hs.filter((h) => h.identity_id !== id));
@@ -104,8 +106,8 @@ export default function HabitApp() {
     persistHabitName(id, name);
   };
 
-  const deleteHabit = (id: string) => {
-    if (!confirm("Delete this habit?")) return;
+  const deleteHabit = async (id: string) => {
+    if (!(await confirm({ title: "Delete habit", message: "Delete this habit? This can’t be undone." }))) return;
     setHabits((hs) => hs.filter((h) => h.id !== id));
     setLogs((m) => {
       const next = { ...m };

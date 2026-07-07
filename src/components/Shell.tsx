@@ -6,12 +6,14 @@ import FocusApp from "@/components/focus/FocusApp";
 import HabitApp from "@/components/habits/HabitApp";
 import TodoApp from "@/components/todo/TodoApp";
 import ProfileApp from "@/components/profile/ProfileApp";
+import ConfirmProvider from "@/components/ui/ConfirmProvider";
 
 export default function Shell() {
   const [tab, setTab] = useState<"focus" | "habit" | "todo" | "profile">("focus");
   const [focusImmersive, setFocusImmersive] = useState(false);
 
   return (
+    <ConfirmProvider>
     <div className="suite-root">
       <div style={{ display: tab === "focus" ? "block" : "none" }}>
         <FocusApp active={tab === "focus"} onImmersive={setFocusImmersive} />
@@ -38,5 +40,6 @@ export default function Shell() {
         </nav>
       )}
     </div>
+    </ConfirmProvider>
   );
 }

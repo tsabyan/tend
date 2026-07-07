@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Plus, X, Check, ArrowRight, ArrowLeft, Sparkles, RotateCcw, Trash2, Play, Pause, Coffee } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { useConfirm } from "@/components/ui/ConfirmProvider";
 import { chimeSession } from "@/lib/chime";
 import { useDebounced } from "@/lib/useDebounced";
 import type { Goal, Step } from "@/lib/types";
@@ -17,6 +18,7 @@ type Props = {
 export default function FocusApp({ active, onImmersive }: Props) {
   // createBrowserClient is a module-level singleton, so this is stable across renders
   const supabase = createClient();
+  const confirm = useConfirm();
   const [loaded, setLoaded] = useState(false);
   const [view, setView] = useState<"home" | "plan" | "focus">("home");
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -132,9 +134,9 @@ export default function FocusApp({ active, onImmersive }: Props) {
     setView("plan");
   };
 
-  const deleteGoal = (id: string, e: React.MouseEvent) => {
+  const deleteGoal = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!confirm("Delete this goal and its steps?")) return;
+    if (!(await confirm({ title: "Delete goal", message: "Delete this goal and its steps? This can’t be undone." }))) return;
     setGoals((gs) => gs.filter((g) => g.id !== id));
     setSteps((ss) => ss.filter((s) => s.goal_id !== id));
     supabase.from("goals").delete().eq("id", id).then();
