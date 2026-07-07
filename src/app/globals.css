@@ -23,14 +23,27 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .suite-tab{flex:1; background:none; border:none; color:#b3b6af; font-family:var(--font-sans); font-size:11px; font-weight:600; letter-spacing:.01em; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; transition:color .15s; padding-top:2px;}
 .suite-tab span{line-height:1;}
 .suite-tab.on{color:var(--amber);}
-.suite-tab:hover{color:var(--ink);}
+.suite-tab:not(.on):hover{color:var(--ink);}
 .suite-head{display:flex; align-items:center; gap:11px; margin-bottom:6px;}
 .suite-head .naf-h1,.suite-head .hb-h1,.suite-head .td-h1{margin:2px 0 0;}
 .suite-empty{text-align:center; padding:32px 6px 10px;}
 .suite-empty .naf-empty,.suite-empty .hb-empty,.suite-empty .td-empty{margin-top:14px; padding:0;}
-.suite-signout{position:fixed; top:14px; right:14px; z-index:60; background:none; border:none; color:#cfcdc4; cursor:pointer; padding:6px; border-radius:8px; transition:color .15s;}
-.suite-signout:hover{color:var(--ink);}
 @media (prefers-reduced-motion: reduce){.suite-tab{transition:none;}}
+
+/* ===== profile (pf) ===== */
+.pf-root{min-height:100vh; background:transparent; color:var(--ink); font-family:var(--font-sans);}
+.pf-wrap{max-width:520px; margin:0 auto; padding:34px 24px 100px;}
+.pf-eyebrow{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink2);}
+.pf-h1{font-family:var(--font-serif); font-weight:500; font-size:28px; letter-spacing:-.01em; margin:8px 0 4px; color:var(--ink);}
+.pf-sub{color:var(--ink2); font-size:14px; margin-bottom:24px;}
+.pf-card{display:flex; align-items:center; gap:15px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px 20px; margin-bottom:16px;}
+.pf-avatar{flex-shrink:0; width:48px; height:48px; border-radius:50%; background:var(--amber); color:#fff; display:grid; place-items:center; font-family:var(--font-serif); font-size:22px; font-weight:500;}
+.pf-info{min-width:0;}
+.pf-label{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); margin-bottom:4px;}
+.pf-email{font-size:15px; color:var(--ink); word-break:break-word;}
+.pf-form{margin:0;}
+.pf-signout{width:100%; font-family:inherit; font-size:15px; font-weight:600; border-radius:12px; padding:14px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid #eecabd; background:#fbeee8; color:#c0573a; transition:all .15s;}
+.pf-signout:hover{background:#f6e2d9; border-color:#e6b7a7;}
 
 /* ===== auth ===== */
 .auth-root{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--bg);}
@@ -68,15 +81,16 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .naf-card:hover{border-color:#dad8cf;}
 .naf-card.complete{opacity:.6;}
 .naf-card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+.naf-card-topright{display:flex; align-items:center; gap:8px; flex-shrink:0; padding-top:2px;}
 .naf-card-title{font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:1.25; letter-spacing:-.01em; word-break:break-word; color:var(--ink);}
 .naf-card-count{font-family:var(--font-mono); font-size:12px; color:var(--ink2); flex-shrink:0; padding-top:4px;}
+.naf-card-topright .naf-card-count{padding-top:0;}
 .naf-card-next{font-size:14px; color:var(--ink2); margin-top:8px; line-height:1.4;}
 .naf-card-next b{color:var(--ink); font-weight:600;}
 .naf-card-bar{height:5px; background:var(--track); border-radius:3px; overflow:hidden; margin-top:14px;}
 .naf-card-fill{height:100%; background:var(--amber); border-radius:3px; transition:width .4s;}
 .naf-card-done{color:var(--amber-d); font-size:14px; margin-top:8px; display:flex; align-items:center; gap:7px;}
-.naf-card-del{position:absolute; top:14px; right:14px; background:none; border:none; color:#cfcdc4; cursor:pointer; padding:4px; opacity:0; transition:opacity .15s;}
-.naf-card:hover .naf-card-del{opacity:1;}
+.naf-card-del{background:none; border:none; color:#c4c2b9; cursor:pointer; padding:4px; display:grid; place-items:center; transition:color .15s;}
 .naf-card-del:hover{color:var(--ink);}
 .naf-back{background:none; border:none; color:var(--ink2); cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-family:inherit; font-size:13px; padding:4px 0; margin-bottom:16px;}
 .naf-back:hover{color:var(--ink);}
@@ -92,8 +106,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .naf-check.on{background:var(--amber); border-color:var(--amber);}
 .naf-step-text{flex:1; font-size:15px; line-height:1.45; padding-top:1px; word-break:break-word; color:var(--ink);}
 .naf-step.done .naf-step-text{text-decoration:line-through;}
-.naf-del{background:none; border:none; color:#cfcdc4; cursor:pointer; padding:2px; opacity:0; transition:opacity .15s;}
-.naf-step:hover .naf-del{opacity:1;}
+.naf-del{background:none; border:none; color:#c4c2b9; cursor:pointer; padding:2px; flex-shrink:0; transition:color .15s;}
 .naf-del:hover{color:var(--ink);}
 .naf-add{display:flex; gap:10px; align-items:center; margin-top:16px;}
 .naf-add-input{flex:1; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 15px; color:var(--ink); font-size:15px; outline:none; font-family:inherit;}
@@ -262,8 +275,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .td-sun{background:none; border:none; color:#d6d4ca; cursor:pointer; padding:3px; flex-shrink:0; transition:color .15s;}
 .td-sun:hover{color:var(--ink2);}
 .td-sun.on{color:var(--amber);}
-.td-del{background:none; border:none; color:#d6d4ca; cursor:pointer; padding:3px; flex-shrink:0; opacity:0; transition:opacity .15s, color .15s;}
-.td-task:hover .td-del{opacity:1;}
+.td-del{background:none; border:none; color:#c4c2b9; cursor:pointer; padding:3px; flex-shrink:0; transition:color .15s;}
 .td-del:hover{color:var(--ink);}
 .td-empty{color:var(--ink2); font-size:14px; padding:14px 0; line-height:1.6;}
 @media (prefers-reduced-motion: reduce){.td-check,.td-sun,.td-del{transition:none;} .td-check.pop{animation:none;}}

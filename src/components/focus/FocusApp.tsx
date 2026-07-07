@@ -348,10 +348,12 @@ export default function FocusApp({ active, onImmersive }: Props) {
               const complete = total > 0 && done === total;
               return (
                 <div key={g.id} className={"naf-card" + (complete ? " complete" : "")} onClick={() => openGoal(g.id)}>
-                  <button className="naf-card-del" onClick={(e) => deleteGoal(g.id, e)} aria-label="Delete goal"><Trash2 size={16} /></button>
                   <div className="naf-card-top">
                     <div className="naf-card-title">{g.title || "Untitled"}</div>
-                    {total > 0 && <div className="naf-card-count">{done}/{total}</div>}
+                    <div className="naf-card-topright">
+                      {total > 0 && <div className="naf-card-count">{done}/{total}</div>}
+                      <button className="naf-card-del" onClick={(e) => deleteGoal(g.id, e)} aria-label="Delete goal"><Trash2 size={15} /></button>
+                    </div>
                   </div>
                   {total === 0 ? (
                     <div className="naf-card-next">No steps yet — tap to plan</div>
