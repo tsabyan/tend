@@ -12,9 +12,15 @@
   --font-mono: var(--f-spline-mono), monospace;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+/* no text-selection block on tappable UI; inputs/text stay selectable */
+button, .naf-card, .hb-idcard, .hb-card, .hb-row, .td-task, .naf-step, .suite-tab, .cf-overlay {
+  -webkit-user-select: none; user-select: none;
+}
+input, textarea, .naf-goal-input, .hb-name-input { -webkit-user-select: auto; user-select: auto; }
 
 /* ===== shell ===== */
 .suite-root{min-height:100vh; background:var(--bg);}
